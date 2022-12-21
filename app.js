@@ -118,6 +118,7 @@ const document_folder = require("./routes/doc_folder");
 const document_subFolder = require("./routes/doc_subfolder");
 const upload_doc = require("./routes/doc_upload");
 const finance_list = require("./routes/finance_list");
+const finance_invoice = require("./routes/finance_invoice");
 const student_email = require("./routes/std_temp_list");
 const student_text = require("./routes/std_text_list");
 const tutorial = require("./routes/tutorials");
@@ -193,18 +194,23 @@ const viewFormRoutes = require("./routes/builder/view-form");
 const templateRoutes = require("./routes/builder/template");
 const templateCategoryRoutes = require("./routes/builder/template_category");
 // purchase number
-const purchaseNum = require('./routes/user')
+const purchaseNum = require("./routes/user");
 // buy historyy
-const buyhistory = require('./routes/BuyingHistory')
-const audioCall = require('./routes/AudioCall')
+const buyhistory = require("./routes/BuyingHistory");
+const audioCall = require("./routes/AudioCall");
 // my wallet
 const myWallet = require("./routes/Mywallet")
 
 // livechat
 const livechat = require("./routes/livechat");
+const livechatsetting = require("./routes/livechat_widget_setting");
 
 // ticket
 const ticket = require("./routes/ticket.route");
+
+// Work History
+const workHistory = require("./routes/workHistory");
+const sub_user_roles = require("./routes/sub_user_roles");
 
 const app = express();
 // app.use(fileUpload({ safeFileNames: true, preserveExtension: true }))
@@ -295,6 +301,7 @@ app.use("/api", psubcategory);
 app.use("/api", add_membership);
 app.use("/api", finance_info);
 app.use("/api", finance);
+app.use("/api", finance_invoice);
 app.use("/api", bymember_ship);
 app.use("/api", withdraw_funds);
 app.use("/api", family_member);
@@ -417,19 +424,23 @@ app.use("/api", recommendedCandidatesRoutes);
 app.use("/api", membershipFolderRoute);
 app.use("/api", Dashboard);
 // purchae num
-app.use('/api', purchaseNum)
-app.use('/api', buyhistory)
+app.use("/api", purchaseNum);
+app.use("/api", buyhistory);
 // audio
-app.use("/api", audioCall)
+app.use("/api", audioCall);
 // my wallets
-app.use("/api", myWallet)
+app.use("/api", myWallet);
 // voice call
-app.use('/v1', VoiceCall) 
+app.use("/v1", VoiceCall);
+
+// Work history
+app.use("/api", workHistory);
+app.use("/api", sub_user_roles);
 
 
 // livechat routes
 app.use("/api", livechat);
-
+app.use("/api", livechatsetting);
 // form builder routes
 app.use("/api/forms", builderRoutes);
 app.use("/api/builder/view", viewFormRoutes);

@@ -2,25 +2,10 @@ const express = require("express");
 const router = express.Router();
 const cors = require("cors")
 
-const {getForms, 
-       getForm,
-       updateFormData,
-       updateFormSettings, 
-       deleteForm,
-       moveToTrash,
-       processForm, 
-       createForm,
-       markAsFavourite,
-       getFavourites,
-       storeForm,
-       loadForm,
-       favouriteForm,
-       archiveForm,
-       processStripeConnect,
-       saveFunnelContact,
-       getFunnelContact,
-       createDigitalForm
-    } = require("../../controllers/builder/builder")
+const { getForms, getForm, updateFormData, updateFormSettings, deleteForm, moveToTrash, processForm, createForm, markAsFavourite, getFavourites,
+    storeForm, loadForm, archiveForm, processStripeConnect, saveFunnelContact, getFunnelContact, createDigitalForm} = require("../../controllers/builder/builder")
+
+const { createAutomation, deleteAutomation, getAutomations, updateAutomationData, moveToTrashAuto } = require("../../controllers/builder/automation")
 
 const { requireSignin, isAuth, verifySchool } = require("../../controllers/auth");
 
@@ -70,7 +55,7 @@ router.get('/process/newstudent/:id/:userId', verifySchool, processForm)
  *       200:
  *         description: Created
  */
-router.post('/new/:userId', requireSignin, createForm)
+router.post('/new/:userId', createForm)
 
 /**
  * @swagger
@@ -228,6 +213,87 @@ router.get('/load/:id', requireSignin, loadForm)
  */
 router.get('/:id', requireSignin, getForm)
 
-router.post('/digitalFrom/:userId/:form', requireSignin, createDigitalForm)
+router.post('/digitalFrom/:userId/:formType', requireSignin, createDigitalForm)
+
+/** Automation Part */
+/**
+ * @swagger
+ * /api/forms/automation/new:
+ *   post:
+ *     summary: creates new form
+ *     description: creates new form
+ *     requestBody:
+ *       description: Body for the new form
+ *     responses:
+ *       200:
+ *         description: Created
+ */
+router.post('/automation/new/:userId', requireSignin, createAutomation)
+
+/**
+ * @swagger
+ * /api/forms/automations:
+ *   get:
+ *     summary: get all forms
+ *     description: fetch all forms
+ *     responses:
+ *       200:
+ *         description: Fetch forms
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ArrayOfForms'
+ */
+router.get('/automations/:formId', requireSignin, getAutomations)
+
+/**
+ * @swagger
+ * /api/forms/automation/update:
+ *   patch:
+ *     summary: update form
+ *     description: update specific form
+ *     parameters:
+ *       - in: id
+ *         name: formId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the form to update
+ *     responses:
+ *       200:
+ *         description: update form
+ */
+router.patch('/automation/update/:id', requireSignin, updateAutomationData)
+
+/**
+ * @swagger
+ * /api/forms/automation/delete:
+ *   delete:
+ *     summary: delete specific form
+ *     description: delete specific form
+ *     parameters:
+ *       - in: id
+ *         name: formId
+ *         schema:
+ *           type: String
+ *         required: true
+ *         description: ID of the form to delete
+ */
+router.delete('/automation/delete/:id', requireSignin, deleteAutomation)
+
+/**
+ * @swagger
+ * /api/forms/automation/trash/:id:
+ *   patch:
+ *     summary: move form to trash
+ *     description: move form to trash
+ *     parameters:
+ *       - in: id
+ *         name: formId
+ *         schema:
+ *           type: String
+ *         required: true
+ */
+router.patch('/automation/trash/:id', requireSignin, moveToTrashAuto)
 
 module.exports = router;

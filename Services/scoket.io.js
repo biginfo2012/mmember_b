@@ -28,6 +28,14 @@ class SocketEngine {
     this.init();
   }
 
+  async notifyNewEmail(adminId, reqName, message) {
+    if (adminSockets[adminId]) {
+      for (let key in adminSockets[adminId]) {
+        this.sConnection.to(key).emit("newEmail", {reqName, message});
+      }
+    }
+  }
+
   async init() {
     //start listen
     var io = this.sConnection;

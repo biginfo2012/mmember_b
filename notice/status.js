@@ -906,11 +906,10 @@ const chargeEmiWithStripeCron = async () => {
 // DailyTriggeredCrons();
 module.exports = cron.schedule("0 13 * * *", () => 
   collectionModify(),
-    activeMembership(),
-    expiredMembership(),
-    chargeEmiWithStripeCron(),
+    //activeMembership(),
+    //expiredMembership(),
+    //chargeEmiWithStripeCron(),
 );
-module.exports = cron.schedule(`*/1 * * * *`, () => emailCronFucntionality());
 
 // DailyTriggeredStripe Charge script();
 //module.exports = cron.schedule(`*/1 * * * *`, () => chargeEmiWithStripeCron());

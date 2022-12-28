@@ -117,6 +117,7 @@ const text_Library_Folder = require("./routes/text_library_folder");
 const document_folder = require("./routes/doc_folder");
 const document_subFolder = require("./routes/doc_subfolder");
 const upload_doc = require("./routes/doc_upload");
+const doc_recipients = require("./routes/doc_recipients");
 const finance_list = require("./routes/finance_list");
 const finance_invoice = require("./routes/finance_invoice");
 const student_email = require("./routes/std_temp_list");
@@ -199,6 +200,9 @@ const purchaseNum = require("./routes/user");
 const buyhistory = require("./routes/BuyingHistory");
 const audioCall = require("./routes/AudioCall");
 // my wallet
+<<<<<<< HEAD
+const myWallet = require("./routes/Mywallet");
+=======
 const myWallet = require("./routes/Mywallet")
 
 // livechat
@@ -212,6 +216,7 @@ const ticket = require("./routes/ticket.route");
 const workHistory = require("./routes/workHistory");
 const sub_user_roles = require("./routes/sub_user_roles");
 
+>>>>>>> 503d5b29f17a970135a0d15ab4fdb7b2e5c204b5
 const app = express();
 // app.use(fileUpload({ safeFileNames: true, preserveExtension: true }))
 const { v4: uuidv4 } = require("uuid");
@@ -220,7 +225,7 @@ const server = http.createServer(app);
 const io = socketio(server);
 app.set("socketio", io);
 const engineSocket = require("./Services/scoket.io");
-new engineSocket(io);
+exports.socketEngine = new engineSocket(io);
 
 const followup_notes = require("./models/followup_notes");
 uuidv4();
@@ -361,6 +366,7 @@ app.use("/api", text_Library_Folder);
 app.use("/api", document_folder);
 app.use("/api", document_subFolder);
 app.use("/api", upload_doc);
+app.use("/api", doc_recipients);
 app.use("/api", textTemplateRoutes);
 app.use("/api", textChatRoutes);
 app.use("/api", chatbotUsersRoutes);
